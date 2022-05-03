@@ -1,5 +1,7 @@
 //the model only works withe the data on however they stored
 
+const launches = require('./launches.mongo');
+
 const launches = new Map();
 
 let latestFlightNumber = 100;
@@ -11,7 +13,7 @@ const launch = {
     rocket: 'Explorer IS1',
     launchDate: new Date('Decemer 27, 2030'),
     target: 'Kepler-442 b',
-    customer: ['ZTM', 'NASA'],
+    customers: ['ZTM', 'NASA'],
     upcoming: true,
     success: true,
 };
