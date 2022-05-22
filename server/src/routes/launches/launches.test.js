@@ -16,10 +16,10 @@ describe('Launches', () => {
     })
     
     
-    describe('Test GET /launches', () => {
+    describe('Test GET /v1/launches', () => {
         it('it should response with 200 success', async () => {
             const response = await request(app)
-            .get('/launches')
+            .get('/v1/launches')
             .expect('Content-Type', /json/)
             .expect(200);
             
@@ -27,7 +27,7 @@ describe('Launches', () => {
         })
     })
     
-    describe('Test POST /launches', () => {
+    describe('Test POST /v1/launches', () => {
         
         const completeLaunchData = {
             mission: "ZTM155",
@@ -51,7 +51,7 @@ describe('Launches', () => {
         
         test('it should response with 201 created', async () => {
             const response = await request(app)
-            .post('/launches')
+            .post('/v1/launches')
             .send(completeLaunchData)
             .expect('Content-Type', /json/)
             .expect(201);
@@ -65,7 +65,7 @@ describe('Launches', () => {
         
         test('it should catch missing required properties', async () => {
             const response = await request(app)
-            .post('/launches')
+            .post('/v1/launches')
             .send(launchDataWithoutDate)
             .expect('Content-Type', /json/)
             .expect(400);
@@ -77,7 +77,7 @@ describe('Launches', () => {
         
         test('it should catch invalid dates', async () => {
             const response = await request(app)
-            .post('/launches')
+            .post('/v1/launches')
             .send(launchDataWithInvalidDate)
             .expect('Content-Type', /json/)
             .expect(400);
@@ -88,7 +88,7 @@ describe('Launches', () => {
         });
     })
     
-    // describe('Test DELETE /launches/:id', () => {
+    // describe('Test DELETE /v1/launches/:id', () => {
         //     test('it should response with', ()=> {
             //         expect
             //     })
