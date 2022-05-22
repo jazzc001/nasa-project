@@ -9,6 +9,11 @@ describe('Launches', () => {
     beforeAll(async () => {
         await mongoConnect();
     })
+
+    afterAll(async () => {
+        // Closing the DB connection allows Jest to exit successfully.
+        await mongoDisconnect();
+    })
     
     
     describe('Test GET /launches', () => {
@@ -27,20 +32,20 @@ describe('Launches', () => {
         const completeLaunchData = {
             mission: "ZTM155",
             rocket: "ZTM Experimental IS1",
-            target: "Kepler-186 f",
+            target: "Kepler-62 f",
             launchDate: "July 1, 2028"
         }
         
         const launchDataWithoutDate = {
             mission: "ZTM155",
             rocket: "ZTM Experimental IS1",
-            target: "Kepler-186 f"
+            target: "Kepler-62 f"
         }
         
         const launchDataWithInvalidDate = {
             mission: "ZTM155",
             rocket: "ZTM Experimental IS1",
-            target: "Kepler-186 f",
+            target: "Kepler-62 f",
             launchDate: "hello"
         }
         
@@ -90,8 +95,5 @@ describe('Launches', () => {
             // })
     
         
-    afterAll(async () => {
-        // Closing the DB connection allows Jest to exit successfully.
-        mongoDisconnect();
-    })
+   
 })
