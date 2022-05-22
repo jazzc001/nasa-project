@@ -1,4 +1,6 @@
 //the model only works withe the data on however they stored
+const axios = require('axios');
+
 
 const launchesDatabase = require('./launches.mongo');
 const planets = require('./planets.mongo');
@@ -11,17 +13,42 @@ const launches = new Map();
 
 
 const launch = {
-    flightNumber: 100,
-    mission: 'Kepler Exploration X',
-    rocket: 'Explorer IS1',
-    launchDate: new Date('Decemer 27, 2030'),
-    target: 'Kepler-442 b',
-    customers: ['ZTM', 'NASA'],
-    upcoming: true,
-    success: true,
+    flightNumber: 100, //flight_number
+    mission: 'Kepler Exploration X', //name
+    rocket: 'Explorer IS1', //rocket.name
+    launchDate: new Date('Decemer 27, 2030'), //date_local
+    target: 'Kepler-442 b', //not applicable
+    customers: ['ZTM', 'NASA'], //payload.coustomer for each customer
+    upcoming: true,  //upcoming
+    success: true,  //success
 };
 
 saveLaunch(launch);
+
+const SPACEX_API_URL = 'https://api.spacexdata.com/v4/launches/query';
+
+async function loadLaunchData() {
+    console.log('Loading launch data...');
+    const response = await axios.post(SPACEX_API_URL, {
+        query: {},
+        potions: {
+            populate: [
+                {
+                    path: 'rocket',
+                    select: {
+                        name: 1
+                    }
+                }
+            ],
+            {
+                path: 'payloads',
+                select: {
+                    'customer': 1
+                }
+            }
+        }
+    });
+}
 
 // launches.set(launch.flightNumber, launch);
 
@@ -106,6 +133,7 @@ async function abortLaunchById(launchId) {
 }
 
 module.exports = {
+    loadLaunchData,
     exitsLaunchWithId,
     getAllLaunches,
     // addNewLaunch,
